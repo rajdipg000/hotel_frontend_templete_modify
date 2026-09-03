@@ -1,226 +1,521 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Account | Premium Stays</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Component: External font dependency -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Component: Bootstrap layout and utilities -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Component: Bootstrap icon set -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f9fc; color: #334155; }
-        
-        /* Navbar */
-        .top-nav { background: #ffffff; border-bottom: 1px solid #e2e8f0; z-index: 1030; }
-        .notification-badge { position: absolute; top: 0; right: 0; transform: translate(25%, -25%); }
-        
-        /* Sidebar Navigation */
-        .sidebar-wrapper { width: 280px; height: calc(100vh - 70px); position: sticky; top: 70px; background: #ffffff; border-right: 1px solid #e2e8f0; overflow-y: auto; }
-        .nav-link-custom { color: #64748b; border-radius: 0.5rem; padding: 0.75rem 1rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem; text-decoration: none; }
-        .nav-link-custom:hover { background-color: #f1f5f9; color: #0f172a; }
-        .nav-link-custom.active { background-color: #eff6ff; color: #2563eb; }
-        .nav-link-custom.active i { color: #2563eb; }
-        .nav-link-custom i { font-size: 1.25rem; color: #94a3b8; }
-        
-        /* Content Area */
-        .main-content { flex: 1; padding: 2rem; max-width: 1200px; }
-        
-        /* Custom Cards */
-        .card-custom { border: none; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); background: #ffffff; }
-        .loyalty-card { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; }
-        .hotel-img { width: 100%; height: 100%; object-fit: cover; border-radius: 0.75rem; min-height: 180px; }
-        
-        /* Utilities */
-        .text-xs { font-size: 0.75rem; }
-        .fw-semibold { font-weight: 600; }
-        
-        /* Responsive */
-        @media (max-width: 992px) {
-            .sidebar-wrapper { display: none; } /* Would be replaced by offcanvas in JS */
-            .main-content { padding: 1rem; }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f7f9fc;
+        color: #334155;
+      }
+
+      /* Component: Top navigation bar */
+      .top-nav {
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        z-index: 1030;
+      }
+      .notification-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(25%, -25%);
+      }
+
+      /* Component: Sidebar navigation and mobile drawer */
+      .sidebar-wrapper {
+        width: 280px;
+        height: calc(100vh - 70px);
+        position: sticky;
+        top: 0;
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
+        overflow-y: auto;
+      }
+      .sidebar-toggle {
+        display: none;
+      }
+      .sidebar-backdrop {
+        display: none;
+      }
+      .nav-link-custom {
+        color: #64748b;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.25rem;
+        text-decoration: none;
+      }
+      .nav-link-custom:hover {
+        background-color: #f1f5f9;
+        color: #0f172a;
+      }
+      .nav-link-custom.active {
+        background-color: #eff6ff;
+        color: #2563eb;
+      }
+      .nav-link-custom.active i {
+        color: #2563eb;
+      }
+      .nav-link-custom i {
+        font-size: 1.25rem;
+        color: #94a3b8;
+      }
+
+      /* Component: Main content layout */
+      .main-content {
+        flex: 1;
+        padding: 2rem;
+        max-width: 1200px;
+      }
+
+      /* Component: Dashboard cards and hotel image */
+      .card-custom {
+        border: none;
+        border-radius: 1rem;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        background: #ffffff;
+      }
+      .loyalty-card {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        color: white;
+      }
+      .hotel-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.75rem;
+        min-height: 180px;
+      }
+
+      /* Component: Local utility classes */
+      .text-xs {
+        font-size: 0.75rem;
+      }
+      .fw-semibold {
+        font-weight: 600;
+      }
+
+      /* Component: Responsive sidebar and content behavior */
+      @media (max-width: 992px) {
+        .sidebar-wrapper {
+          display: block;
+          position: fixed;
+          left: -280px;
+          top: 70px;
+          z-index: 1025;
+          box-shadow: 8px 0 24px rgba(15, 23, 42, 0.12);
+          transition: left 0.25s ease;
         }
+        .sidebar-wrapper.is-open {
+          left: 0;
+        }
+        .sidebar-toggle {
+          display: inline-flex;
+        }
+        .sidebar-backdrop.is-visible {
+          display: block;
+          position: fixed;
+          inset: 0;
+          z-index: 1020;
+          background: rgba(15, 23, 42, 0.35);
+        }
+        .main-content {
+          padding: 1rem;
+        }
+      }
     </style>
-</head>
-<body>
-
-<!-- Top Navigation -->
-<nav class="navbar navbar-expand-lg top-nav sticky-top py-2">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="#">
-            <i class="bi bi-geo-alt-fill fs-3"></i> <span>WanderStay</span>
+  </head>
+  <body>
+    <!-- ============================================================
+         NAVBAR: Brand, language, notifications, and user account
+         ============================================================ -->
+    <!-- Component: Top navigation -->
+    <nav class="navbar navbar-expand-lg top-nav sticky-top py-2">
+      <div class="container-fluid px-4">
+        <!-- Component: Mobile sidebar trigger -->
+        <button
+          class="btn btn-light sidebar-toggle me-2"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="account-sidebar"
+          aria-expanded="false"
+        >
+          <i class="bi bi-list fs-4"></i>
+        </button>
+        <!-- Component: Brand link -->
+        <a
+          class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2"
+          href="#"
+        >
+          <i class="bi bi-geo-alt-fill fs-3"></i> <span>WanderStay</span>
         </a>
-        
+
+        <!-- Component: Account toolbar -->
         <div class="d-flex align-items-center gap-4">
-            <!-- Currency/Language Selectors -->
-            <div class="d-none d-md-flex gap-3 text-muted fw-medium text-sm">
-                <a href="#" class="text-decoration-none text-muted">INR (₹)</a>
-                <a href="#" class="text-decoration-none text-muted"><i class="bi bi-globe"></i> EN</a>
-            </div>
-            
-            <!-- Notifications -->
-            <a href="#" class="text-secondary position-relative">
-                <i class="bi bi-bell fs-5"></i>
-                <span class="position-absolute p-1 bg-danger border border-light rounded-circle notification-badge">
-                    <span class="visually-hidden">New alerts</span>
-                </span>
-            </a>
-            
-            <!-- User Dropdown -->
-            <div class="dropdown">
-                <a class="text-decoration-none d-flex align-items-center gap-2 text-dark" href="#" role="button" data-bs-toggle="dropdown">
-                    <img src="https://ui-avatars.com/api/?name=User&background=eff6ff&color=2563eb" alt="Profile" class="rounded-circle" width="38" height="38">
-                    <div class="d-none d-md-block text-start">
-                        <div class="fw-semibold lh-1">Rahul D.</div>
-                        <div class="text-xs text-muted mt-1">Gold Member</div>
-                    </div>
-                    <i class="bi bi-chevron-down text-muted text-xs ms-1"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
-                    <li><a class="dropdown-item py-2" href="#"><i class="bi bi-person me-2"></i>Manage Account</a></li>
-                    <li><a class="dropdown-item py-2" href="#"><i class="bi bi-gear me-2"></i>Preferences</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger py-2" href="#"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
+          <!-- Component: Currency and language selectors -->
+          <div class="d-none d-md-flex gap-3 text-muted fw-medium text-sm">
+            <a href="#" class="text-decoration-none text-muted">INR (₹)</a>
+            <a href="#" class="text-decoration-none text-muted"
+              ><i class="bi bi-globe"></i> EN</a
+            >
+          </div>
 
-<div class="d-flex bg-light min-vh-100">
-    
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar-wrapper p-3 d-none d-lg-block">
-        <div class="nav-section mb-4">
-            <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">Manage Trips</div>
-            <a href="#" class="nav-link-custom active"><i class="bi bi-grid-1x2"></i> Dashboard</a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-suitcase-lg"></i> Bookings & Itineraries</a>
-            <a href="#" class="nav-link-custom d-flex justify-content-between">
-                <div><i class="bi bi-star"></i> Pending Reviews</div>
-                <span class="badge bg-danger rounded-pill">1</span>
+          <!-- Component: Notifications -->
+          <a href="#" class="text-secondary position-relative">
+            <i class="bi bi-bell fs-5"></i>
+            <span
+              class="position-absolute p-1 bg-danger border border-light rounded-circle notification-badge"
+            >
+              <span class="visually-hidden">New alerts</span>
+            </span>
+          </a>
+
+          <!-- Component: User account dropdown -->
+          <div class="dropdown">
+            <a
+              class="text-decoration-none d-flex align-items-center gap-2 text-dark"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
+              <img
+                src="https://ui-avatars.com/api/?name=User&background=eff6ff&color=2563eb"
+                alt="Profile"
+                class="rounded-circle"
+                width="38"
+                height="38"
+              />
+              <div class="d-none d-md-block text-start">
+                <div class="fw-semibold lh-1">Rahul D.</div>
+                <div class="text-xs text-muted mt-1">Gold Member</div>
+              </div>
+              <i class="bi bi-chevron-down text-muted text-xs ms-1"></i>
             </a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-heart"></i> Wishlists & Saved</a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+              <li>
+                <a class="dropdown-item py-2" href="#"
+                  ><i class="bi bi-person me-2"></i>Manage Account</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item py-2" href="#"
+                  ><i class="bi bi-gear me-2"></i>Preferences</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item text-danger py-2" href="#"
+                  ><i class="bi bi-box-arrow-right me-2"></i>Sign Out</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-        
+      </div>
+    </nav>
+
+        <!-- ============================================================
+          PAGE LAYOUT: Sidebar and main dashboard area
+          ============================================================ -->
+        <div class="d-flex bg-light min-vh-100">
+      <!-- Component: Sidebar navigation -->
+       <!-- ==========================================================
+         SIDEBAR: Dashboard navigation links
+         ========================================================== -->
+      <aside class="sidebar-wrapper p-3" id="account-sidebar">
+        <!-- Component group: Trip management -->
         <div class="nav-section mb-4">
-            <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">Account & Wallet</div>
-            <a href="#" class="nav-link-custom"><i class="bi bi-wallet2"></i> Rewards & Wallet</a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-people"></i> Travel Companions</a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-credit-card"></i> Payment Methods</a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-shield-check"></i> Privacy & Security</a>
+          <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">
+            Manage Trips
+          </div>
+          <a href="#" class="nav-link-custom active"
+            ><i class="bi bi-grid-1x2"></i> Dashboard</a
+          >
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-suitcase-lg"></i> Bookings & Itineraries</a
+          >
+          <a href="#" class="nav-link-custom d-flex justify-content-between">
+            <div><i class="bi bi-star"></i> Pending Reviews</div>
+            <span class="badge bg-danger rounded-pill">1</span>
+          </a>
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-heart"></i> Wishlists & Saved</a
+          >
         </div>
 
+        <!-- Component group: Account and wallet -->
+        <div class="nav-section mb-4">
+          <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">
+            Account & Wallet
+          </div>
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-wallet2"></i> Rewards & Wallet</a
+          >
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-people"></i> Travel Companions</a
+          >
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-credit-card"></i> Payment Methods</a
+          >
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-shield-check"></i> Privacy & Security</a
+          >
+        </div>
+
+        <!-- Component group: Help links -->
         <div class="nav-section">
-            <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">Help</div>
-            <a href="#" class="nav-link-custom"><i class="bi bi-headset"></i> Customer Support</a>
-            <a href="#" class="nav-link-custom"><i class="bi bi-question-circle"></i> FAQs</a>
+          <div class="text-xs fw-bold text-uppercase text-muted mb-3 px-3">
+            Help
+          </div>
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-headset"></i> Customer Support</a
+          >
+          <a href="#" class="nav-link-custom"
+            ><i class="bi bi-question-circle"></i> FAQs</a
+          >
         </div>
-    </aside>
+      </aside>
+      <!-- Component: Mobile sidebar backdrop -->
+      <div class="sidebar-backdrop" aria-hidden="true"></div>
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-        
-        <!-- Welcome & Loyalty Banner -->
+       <!-- ==========================================================
+         MAIN CONTENT: Welcome, review alert, and next trip
+         ========================================================== -->
+       <!-- Component: Main dashboard content -->
+      <main class="main-content">
+        <!-- Component: Welcome and loyalty summary -->
         <div class="card-custom loyalty-card p-4 mb-4">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h2 class="fw-bold mb-1">Welcome back, Rahul!</h2>
-                    <p class="mb-3 opacity-75">You are 1,200 points away from Platinum Tier.</p>
-                    <div class="progress" style="height: 8px; background-color: rgba(255,255,255,0.2);">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2 text-sm opacity-75">
-                        <span>Gold</span>
-                        <span>Platinum</span>
-                    </div>
-                </div>
-                <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                    <div class="text-white opacity-75 mb-1 text-sm">Wander Wallet Balance</div>
-                    <h3 class="fw-bold mb-0">₹ 4,500</h3>
-                    <button class="btn btn-light btn-sm mt-3 fw-medium">View Rewards</button>
-                </div>
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h2 class="fw-bold mb-1">Welcome back, Rahul!</h2>
+              <p class="mb-3 opacity-75">
+                You are 1,200 points away from Platinum Tier.
+              </p>
+              <div
+                class="progress"
+                style="height: 8px; background-color: rgba(255, 255, 255, 0.2)"
+              >
+                <div
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  style="width: 75%"
+                ></div>
+              </div>
+              <div
+                class="d-flex justify-content-between mt-2 text-sm opacity-75"
+              >
+                <span>Gold</span>
+                <span>Platinum</span>
+              </div>
             </div>
+            <div class="col-md-4 text-md-end mt-4 mt-md-0">
+              <div class="text-white opacity-75 mb-1 text-sm">
+                Wander Wallet Balance
+              </div>
+              <h3 class="fw-bold mb-0">₹ 4,500</h3>
+              <button class="btn btn-light btn-sm mt-3 fw-medium">
+                View Rewards
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Action Required Alert -->
-        <div class="alert alert-warning border-0 shadow-sm rounded-4 d-flex align-items-center gap-3 p-3 mb-4" role="alert">
-            <i class="bi bi-chat-square-text-fill fs-3 text-warning"></i>
-            <div class="flex-grow-1">
-                <h6 class="fw-bold mb-1">How was your stay in Kolkata?</h6>
-                <p class="mb-0 text-sm">Your feedback helps other travelers. Review The Oberoi Grand to earn 200 bonus points.</p>
-            </div>
-            <button class="btn btn-warning btn-sm fw-medium text-dark px-3">Write Review</button>
+        <!-- Component: Action-required review alert -->
+        <div
+          class="alert alert-warning border-0 shadow-sm rounded-4 d-flex align-items-center gap-3 p-3 mb-4"
+          role="alert"
+        >
+          <i class="bi bi-chat-square-text-fill fs-3 text-warning"></i>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold mb-1">How was your stay in Kolkata?</h6>
+            <p class="mb-0 text-sm">
+              Your feedback helps other travelers. Review The Oberoi Grand to
+              earn 200 bonus points.
+            </p>
+          </div>
+          <button class="btn btn-warning btn-sm fw-medium text-dark px-3">
+            Write Review
+          </button>
         </div>
 
         <h4 class="fw-bold mb-3">Your Next Trip</h4>
-        
-        <!-- Highly Detailed Booking Card -->
-        <div class="card-custom p-3 mb-5">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-4">
-                    <img src="https://images.unsplash.com/photo-1542314831-c6a4d14faaf2?auto=format&fit=crop&w=400&q=80" alt="Hotel" class="hotel-img">
-                </div>
-                <div class="col-lg-6 col-md-8 d-flex flex-column justify-content-between">
-                    <div>
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 border border-success">Confirmed</span>
-                            <span class="text-muted text-sm"><i class="bi bi-hash"></i> Booking ID: WNDR-99824</span>
-                        </div>
-                        <h4 class="fw-bold mb-1">Taj West End, Bengaluru</h4>
-                        <p class="text-muted text-sm mb-3"><i class="bi bi-geo-alt"></i> Race Course Road, Bengaluru, Karnataka 560001</p>
-                        
-                        <div class="row g-3 mb-3">
-                            <div class="col-6">
-                                <div class="text-xs text-muted text-uppercase fw-semibold mb-1">Check-in</div>
-                                <div class="fw-bold text-dark">Fri, 11 Sep 2026</div>
-                                <div class="text-sm text-muted">From 14:00</div>
-                            </div>
-                            <div class="col-6 border-start">
-                                <div class="text-xs text-muted text-uppercase fw-semibold mb-1">Check-out</div>
-                                <div class="fw-bold text-dark">Sun, 13 Sep 2026</div>
-                                <div class="text-sm text-muted">Until 12:00</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-light rounded-3 p-2 text-sm d-inline-block">
-                        <i class="bi bi-person-fill text-primary"></i> 2 Adults • 1 King Heritage Room • Breakfast Included
-                    </div>
-                </div>
-                
-                <div class="col-lg-3 border-start-lg d-flex flex-column justify-content-between">
-                    <div class="mb-4">
-                        <div class="text-xs text-muted text-uppercase fw-semibold mb-1">Total Price</div>
-                        <h3 class="fw-bold text-dark mb-0">₹ 24,500</h3>
-                        <div class="text-success text-xs mt-1"><i class="bi bi-check-circle-fill"></i> Fully Paid</div>
-                    </div>
-                    
-                    <!-- Real-world post-booking actions -->
-                    <div class="d-flex flex-column gap-2">
-                        <button class="btn btn-primary fw-medium"><i class="bi bi-upc-scan me-2"></i>Show Entry PIN</button>
-                        <button class="btn btn-outline-secondary bg-white fw-medium"><i class="bi bi-file-earmark-pdf me-2"></i>Get Invoice</button>
-                        
-                        <div class="dropdown mt-1">
-                            <button class="btn btn-light w-100 text-start fw-medium d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
-                                More Actions <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <ul class="dropdown-menu shadow w-100 border-0">
-                                <li><a class="dropdown-item text-sm py-2" href="#"><i class="bi bi-car-front me-2"></i>Request Airport Transfer</a></li>
-                                <li><a class="dropdown-item text-sm py-2" href="#"><i class="bi bi-envelope me-2"></i>Message Property</a></li>
-                                <li><a class="dropdown-item text-sm py-2 text-danger" href="#"><i class="bi bi-x-circle me-2"></i>Cancel Booking</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </main>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <!-- Component: Upcoming booking details and actions -->
+        <div class="card-custom p-3 mb-5">
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-4">
+              <img
+                src="https://images.unsplash.com/photo-1542314831-c6a4d14faaf2?auto=format&fit=crop&w=400&q=80"
+                alt="Hotel"
+                class="hotel-img"
+              />
+            </div>
+            <div
+              class="col-lg-6 col-md-8 d-flex flex-column justify-content-between"
+            >
+              <div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span
+                    class="badge bg-success bg-opacity-10 text-success px-2 py-1 border border-success"
+                    >Confirmed</span
+                  >
+                  <span class="text-muted text-sm"
+                    ><i class="bi bi-hash"></i> Booking ID: WNDR-99824</span
+                  >
+                </div>
+                <h4 class="fw-bold mb-1">Taj West End, Bengaluru</h4>
+                <p class="text-muted text-sm mb-3">
+                  <i class="bi bi-geo-alt"></i> Race Course Road, Bengaluru,
+                  Karnataka 560001
+                </p>
+
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <div
+                      class="text-xs text-muted text-uppercase fw-semibold mb-1"
+                    >
+                      Check-in
+                    </div>
+                    <div class="fw-bold text-dark">Fri, 11 Sep 2026</div>
+                    <div class="text-sm text-muted">From 14:00</div>
+                  </div>
+                  <div class="col-6 border-start">
+                    <div
+                      class="text-xs text-muted text-uppercase fw-semibold mb-1"
+                    >
+                      Check-out
+                    </div>
+                    <div class="fw-bold text-dark">Sun, 13 Sep 2026</div>
+                    <div class="text-sm text-muted">Until 12:00</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-light rounded-3 p-2 text-sm d-inline-block">
+                <i class="bi bi-person-fill text-primary"></i> 2 Adults • 1 King
+                Heritage Room • Breakfast Included
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 border-start-lg d-flex flex-column justify-content-between"
+            >
+              <div class="mb-4">
+                <div class="text-xs text-muted text-uppercase fw-semibold mb-1">
+                  Total Price
+                </div>
+                <h3 class="fw-bold text-dark mb-0">₹ 24,500</h3>
+                <div class="text-success text-xs mt-1">
+                  <i class="bi bi-check-circle-fill"></i> Fully Paid
+                </div>
+              </div>
+
+              <!-- Component: Post-booking actions -->
+              <div class="d-flex flex-column gap-2">
+                <button class="btn btn-primary fw-medium">
+                  <i class="bi bi-upc-scan me-2"></i>Show Entry PIN
+                </button>
+                <button class="btn btn-outline-secondary bg-white fw-medium">
+                  <i class="bi bi-file-earmark-pdf me-2"></i>Get Invoice
+                </button>
+
+                <div class="dropdown mt-1">
+                  <button
+                    class="btn btn-light w-100 text-start fw-medium d-flex justify-content-between align-items-center"
+                    data-bs-toggle="dropdown"
+                  >
+                    More Actions <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <ul class="dropdown-menu shadow w-100 border-0">
+                    <li>
+                      <a class="dropdown-item text-sm py-2" href="#"
+                        ><i class="bi bi-car-front me-2"></i>Request Airport
+                        Transfer</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item text-sm py-2" href="#"
+                        ><i class="bi bi-envelope me-2"></i>Message Property</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item text-sm py-2 text-danger" href="#"
+                        ><i class="bi bi-x-circle me-2"></i>Cancel Booking</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+        <!-- ============================================================
+          SCRIPTS: Bootstrap dependency and sidebar interaction
+          ============================================================ -->
+        <!-- Component dependency: Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Component behavior: Mobile sidebar controller -->
+    <script>
+      const sidebar = document.querySelector("#account-sidebar");
+      const sidebarToggle = document.querySelector(".sidebar-toggle");
+      const sidebarBackdrop = document.querySelector(".sidebar-backdrop");
+
+      function closeSidebar() {
+        sidebar.classList.remove("is-open");
+        sidebarBackdrop.classList.remove("is-visible");
+        sidebarToggle.setAttribute("aria-expanded", "false");
+        sidebarToggle.setAttribute("aria-label", "Open navigation");
+      }
+
+      sidebarToggle.addEventListener("click", () => {
+        const isOpen = sidebar.classList.toggle("is-open");
+        sidebarBackdrop.classList.toggle("is-visible", isOpen);
+        sidebarToggle.setAttribute("aria-expanded", String(isOpen));
+        sidebarToggle.setAttribute(
+          "aria-label",
+          isOpen ? "Close navigation" : "Open navigation",
+        );
+      });
+
+      sidebarBackdrop.addEventListener("click", closeSidebar);
+      sidebar.addEventListener("click", (event) => {
+        if (event.target.closest(".nav-link-custom")) {
+          closeSidebar();
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 992) {
+          closeSidebar();
+        }
+      });
+    </script>
+  </body>
 </html>
