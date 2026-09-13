@@ -1,0 +1,328 @@
+/* =========================================================
+ROOVENA / LuxeStay | Black & Gold Login (Bootstrap markup)
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  --gold: #c9a45c;
+  --gold-light: #e2c98f;
+  --gold-dark: #9d793b;
+  --gold-faint: rgba(201, 164, 92, 0.10);
+  --gold-faint-2: rgba(201, 164, 92, 0.22);
+
+  --black: #0b0b0b;
+  --black-soft: #111111;
+  --charcoal: #171717;
+  --charcoal-light: #222222;
+
+  --text: var(--gold-light);
+  --muted: rgba(226, 201, 143, 0.55);
+  --border: var(--gold-faint-2);
+  --border-dark: rgba(201, 164, 92, 0.18);
+
+  --shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(201, 164, 92, 0.10), transparent 30%),
+    var(--black);
+}
+
+/* =========================================================
+Card shell
+========================================================= */
+
+.auth-card {
+  width: min(1050px, 100%);
+  min-height: 650px;
+  background: var(--black-soft);
+  border: 1px solid var(--border-dark);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: cardAppear 0.65s ease both;
+}
+
+@keyframes cardAppear {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+Brand panel (left)
+========================================================= */
+
+.brand-panel {
+  position: relative;
+  padding: 60px 52px;
+  color: var(--gold-light);
+  background: linear-gradient(145deg, #080808 0%, #111111 55%, #181818 100%);
+  overflow: hidden;
+}
+
+.brand-panel::before {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  top: -210px;
+  right: -180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 164, 92, 0.18) 0%, rgba(201, 164, 92, 0.06) 35%, transparent 70%);
+  pointer-events: none;
+}
+
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: -190px;
+  bottom: -190px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 164, 92, 0.16);
+  pointer-events: none;
+}
+
+.brand-content { max-width: 420px; position: relative; z-index: 2; }
+
+.brand-icon-badge {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: var(--gold-light);
+  background: rgba(201, 164, 92, 0.08);
+  border: 1px solid rgba(201, 164, 92, 0.28);
+  font-size: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.brand-eyebrow {
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  opacity: 0.9;
+}
+
+.brand-title {
+  color: var(--gold-light);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 4vw, 3.6rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.brand-title span {
+  display: block;
+  color: var(--gold);
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.brand-description {
+  max-width: 365px;
+  color: rgba(201, 164, 92, 0.55);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.brand-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 48px;
+  color: rgba(201, 164, 92, 0.42);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.brand-line { width: 35px; height: 1px; background: var(--gold); opacity: 0.75; }
+
+/* =========================================================
+Form panel (right)
+========================================================= */
+
+.form-panel {
+  padding: 60px 65px;
+  background: var(--black-soft);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-panel h2 {
+  color: var(--gold-light);
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.form-panel .text-muted {
+  color: var(--muted) !important;
+}
+
+.form-panel .form-label {
+  color: var(--gold-light);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+/* =========================================================
+Inputs (Bootstrap input-group)
+========================================================= */
+
+.icon-input {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.icon-input .input-group-text {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  border-right: none;
+  color: var(--gold-dark);
+  font-size: 16px;
+}
+
+.icon-input .form-control {
+  background: var(--charcoal);
+  border: 1px solid var(--border);
+  border-left: none;
+  color: var(--gold-light);
+  height: 52px;
+  font-size: 14px;
+  box-shadow: none;
+}
+
+.icon-input .form-control::placeholder {
+  color: rgba(201, 164, 92, 0.35);
+}
+
+.icon-input .form-control:focus {
+  background: var(--charcoal-light);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 164, 92, 0.18);
+  color: var(--gold-light);
+}
+
+.icon-input .form-control:focus + .toggle-password,
+.icon-input:focus-within .input-group-text:first-child {
+  border-color: var(--gold);
+}
+
+.toggle-password {
+  cursor: pointer;
+  background: var(--charcoal) !important;
+  border: 1px solid var(--border) !important;
+  border-left: none !important;
+  color: var(--gold-dark) !important;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--gold-light) !important;
+  background: rgba(201, 164, 92, 0.10) !important;
+}
+
+/* =========================================================
+Checkbox
+========================================================= */
+
+.form-check-input {
+  background-color: var(--charcoal);
+  border: 1px solid var(--gold-faint-2);
+}
+
+.form-check-input:checked {
+  background-color: var(--gold-dark);
+  border-color: var(--gold-dark);
+}
+
+.form-check-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 164, 92, 0.18);
+}
+
+/* =========================================================
+Buttons
+========================================================= */
+
+.btn-gradient {
+  height: 52px;
+  border: 1px solid var(--gold);
+  color: var(--black);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+  box-shadow: 0 8px 18px rgba(201, 164, 92, 0.28);
+  font-weight: 600;
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-light);
+  box-shadow: 0 12px 25px rgba(201, 164, 92, 0.38);
+  color: var(--black);
+}
+
+/* =========================================================
+Links
+========================================================= */
+
+.link-primary-custom {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link-primary-custom:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+}
+
+/* =========================================================
+Responsive
+========================================================= */
+
+@media (max-width: 991px) {
+  .form-panel { padding: 45px 40px; height: auto; }
+}
+
+@media (max-width: 600px) {
+  .form-panel { padding: 35px 25px; }
+  .form-panel h2 { font-size: 28px; }
+}
+
+/* =========================================================
+Accessibility / motion
+========================================================= */
+
+.form-control:focus-visible,
+.btn:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(201, 164, 92, 0.35);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
